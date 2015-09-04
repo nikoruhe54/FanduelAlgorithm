@@ -39,9 +39,11 @@ namespace FanDuel_Algorithm
         }
 
 //this is the holy grail button, MAKE SURE THIS WORKS!!!
+
         private void button1_Click(object sender, EventArgs e)
         {
             //populate the array of quarterbacks
+            
             string[,] QBArray = new string[dataGridView1.Rows.Count, dataGridView1.Columns.Count];
 
             for (int x = 0; x < QBArray.GetLength(0); x++)
@@ -53,6 +55,7 @@ namespace FanDuel_Algorithm
             }
 
             //populate the array of runningbacks
+            
             string[,] RBArray = new string[dataGridView2.Rows.Count, dataGridView2.Columns.Count];
 
             for (int x = 0; x < RBArray.GetLength(0); x++)
@@ -64,6 +67,7 @@ namespace FanDuel_Algorithm
             }
 
             //populate the array of wide receivers
+            
             string[,] WRArray = new string[dataGridView3.Rows.Count, dataGridView3.Columns.Count];
 
             for (int x = 0; x < WRArray.GetLength(0); x++)
@@ -75,6 +79,7 @@ namespace FanDuel_Algorithm
             }
 
             //populate the array of tight ends
+            
             string[,] TEArray = new string[dataGridView4.Rows.Count, dataGridView4.Columns.Count];
 
             for (int x = 0; x < TEArray.GetLength(0); x++)
@@ -86,6 +91,7 @@ namespace FanDuel_Algorithm
             }
 
             //populate the array of defenses
+            
             string[,] DEFArray = new string[dataGridView5.Rows.Count, dataGridView5.Columns.Count];
 
             for (int x = 0; x < DEFArray.GetLength(0); x++)
@@ -97,6 +103,7 @@ namespace FanDuel_Algorithm
             }
 
             //populate the array of kickers
+            
             string[,] KArray = new string[dataGridView6.Rows.Count, dataGridView6.Columns.Count];
 
             for (int x = 0; x < KArray.GetLength(0); x++)
@@ -109,6 +116,7 @@ namespace FanDuel_Algorithm
 
             //find how many players are available at each position
             //set those variables
+            
             int QBtot = QBArray.GetLength(0);
             int RBtot = RBArray.GetLength(0);
             int WRtot = WRArray.GetLength(0);
@@ -136,6 +144,9 @@ namespace FanDuel_Algorithm
             Int64 totalsalary = 0;
             double totalpoints;
 
+            //this is the bruteforce engine. Cycle through all the players checking each one for salary cap
+            //requirements and optimized point projections
+            
             for (int a = 0; a < QBtot; a++)
             {
                 for (int b = 0; b < RBtot; b++)
@@ -154,7 +165,7 @@ namespace FanDuel_Algorithm
                                                     {
                                                         for (int j = 0; j < Ktot; j++)
                                                         {
-                                                          //make row 0 the comparison row
+                                                          //make block 0 the comparison row
                                                           
                                                           //populate quarterbacks
                                                             RosterArray[0, 0, 0] = QBArray[a, 0];
