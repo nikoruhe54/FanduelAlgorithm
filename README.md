@@ -1,6 +1,11 @@
 # FanduelAlgorithm
 Generates Rosters that are optimized for projected points while still within salary cap.
 
+//This is a program designed to import a spreadsheet workbook of players, salaries, and projected points of 
+//various players, and then bruteforce every possible fantasy football roster checking to make sure the
+//teams are optimized for highest projected points while remaining at or below the salary cap. It is written
+//in a C# form based application, and there is an accompanying excel spreadsheet that needs to be imported
+//for the program to work.
 
 using System;
 using System.Collections.Generic;
@@ -16,11 +21,13 @@ using Microsoft.Office;
 using System.Reflection;
 using System.Data.OleDb;
 
+
 namespace FanDuel_Algorithm
 {
     public partial class Form1 : Form
     {
         //SET THE SALARY CAP
+        
         int SalaryCap = 60000;
 
 
@@ -42,6 +49,10 @@ namespace FanDuel_Algorithm
 
         private void button1_Click(object sender, EventArgs e)
         {
+        //create a try catch block
+        
+        try {
+        
             //populate the array of quarterbacks
             
             string[,] QBArray = new string[dataGridView1.Rows.Count, dataGridView1.Columns.Count];
@@ -360,8 +371,14 @@ totalpoints = Convert.ToDouble(QBArray[a, 2]) + Convert.ToDouble(RBArray[b, 2]) 
       }
     }
             
+}
 
+catch {
+        MessageBox.Show("Error in populating teams to array. Most likely a data conversion error or
+        a different type of spreadsheet than expected");
+      }
 
+try {
 
 //export to excel... finally
             
@@ -392,19 +409,31 @@ totalpoints = Convert.ToDouble(QBArray[a, 2]) + Convert.ToDouble(RBArray[b, 2]) 
             Excel.Worksheet ws = (Excel.Worksheet)wb.Worksheets.get_Item(1);
             Excel.Range rng = ws.Cells.get_Resize(WinningTeams.GetLength(0), WinningTeams.GetLength(1));
             rng.Value2 = WinningTeams;
-
+        }
+        
+        catch {
+                MessageBox.Show("The File did not export to excel correctly");
+              }
 
         }
 
 //button on the form that selects the excel sheet to import the player data from
         private void button2_Click(object sender, EventArgs e)
         {
+        try {
+        
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
 
             if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 this.textBox_path.Text = openFileDialog1.FileName;
             }
+            
+            }
+            
+            catch {
+                    MessageBox.Show("Error in opening the file");
+                  }
         }
 
   //import the excel sheets for players into datagridviews that we can manipulate in arrays
@@ -412,6 +441,8 @@ totalpoints = Convert.ToDouble(QBArray[a, 2]) + Convert.ToDouble(RBArray[b, 2]) 
         private void button3_Click(object sender, EventArgs e)
         {
 
+            try {
+            
             string PathConn = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + textBox_path.Text + ";Extended Properties=\"Excel 8.0;HDR=Yes;\";";
             OleDbConnection conn = new OleDbConnection(PathConn);
 
@@ -471,7 +502,11 @@ totalpoints = Convert.ToDouble(QBArray[a, 2]) + Convert.ToDouble(RBArray[b, 2]) 
 
             myDataAdapter6.Fill(dt6);
             dataGridView6.DataSource = dt6;
-
+           }
+           
+           catch {
+                    MessageBox.Show("Error in uploading players from spreadsheet to datagridviews");
+                 }
         }
   }
 }
